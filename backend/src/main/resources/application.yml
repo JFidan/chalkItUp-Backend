@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    gcp:
+      project-id: ${GOOGLE_CLOUD_PROJECT}
+      credentials:
+        location: file:${GOOGLE_APPLICATION_CREDENTIALS}

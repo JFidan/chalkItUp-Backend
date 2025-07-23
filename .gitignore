@@ -1,0 +1,54 @@
+# Java / Spring Boot
+*.class
+*.jar
+*.war
+*.iml
+*.log
+*.tmp
+*.bak
+*.swp
+*.pid
+
+# Build-Ordner
+/build/
+/target/
+
+# IDE spezifisch
+/.idea/
+/.vscode/
+/*.ipr
+/*.iws
+/*.iml
+
+# Gradle
+.gradle/
+/build/
+
+# Maven
+/target/
+
+# Lokale Konfigurationsdateien
+application-local.yml
+application-dev.yml
+
+# OS-spezifisch
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+
+# Service Account Keys (Firebase)
+/config/admin.json
+*.json
+
+# Logs
+logs/
+*.log
+
+# Eclipse
+.settings/
+.project
+
+# IntelliJ
+out/
