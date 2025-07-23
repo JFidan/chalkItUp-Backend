@@ -11,3 +11,5 @@ public class ChalkItUpApplication {
 	}
 
 }
+
+//GOOGLE_CLOUD_PROJECT=chalkitup-95340;GOOGLE_APPLICATION_CREDENTIALS=C:\Users\jfidan\Downloads\admin.json

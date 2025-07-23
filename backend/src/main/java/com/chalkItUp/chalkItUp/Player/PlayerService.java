@@ -1,24 +1,30 @@
 package com.chalkItUp.chalkItUp.Player;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.Firestore;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
+@AllArgsConstructor
+@Slf4j
 public class PlayerService {
 
-    private final PlayerRepository playerRepository;
+    private Firestore firestore;
 
-    public PlayerService(PlayerRepository playerRepository) {
-        this.playerRepository = playerRepository;
+    public String createPlayer(Player player) {
+        try {
+            ApiFuture<DocumentReference> players = firestore.collection("Players").add(player);
+            return "Document is saved: id is"+ player.getId();
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new RuntimeException("Error creating player: "+e.getMessage());
+        }
     }
 
-    public Optional<Player> getPlayerById(int id)  {
-        return playerRepository.findById(id);
-    }
 
-    public List<Player> getAllPlayers() {
-        return playerRepository.findAll();
-    }
+
+
 }

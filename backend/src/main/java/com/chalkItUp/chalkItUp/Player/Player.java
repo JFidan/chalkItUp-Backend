@@ -1,25 +1,24 @@
 package com.chalkItUp.chalkItUp.Player;
 
+import com.google.cloud.Timestamp;
+import com.google.cloud.firestore.annotation.DocumentId;
+import com.google.cloud.firestore.annotation.ServerTimestamp;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import jakarta.persistence.*;
-import lombok.*;
-
-@Entity
-@Table(name = "passengers")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Player {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
 
-    @Column(name = "first_name")
-    private String firstname;
+    @DocumentId
+    private String id;
+    private String firstName;
+    private String lastName;
 
-    @Column(name = "last_name")
-    private String lastname;
-
+    @ServerTimestamp
+    private Timestamp createdAt;
 }
