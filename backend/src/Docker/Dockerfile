@@ -4,9 +4,10 @@ FROM maven:3.9.6-eclipse-temurin-21 AS builder
 WORKDIR /app
 
 # Für Dependency-Caching
-COPY pom.xml .
-COPY .mvn .mvn
-COPY mvnw .
+COPY ../../pom.xml .
+COPY ../../src ./src
+COPY ../../.mvn .mvn
+COPY ../../mvnw .
 RUN ./mvnw dependency:go-offline
 
 # Jetzt den Quellcode kopieren und bauen
