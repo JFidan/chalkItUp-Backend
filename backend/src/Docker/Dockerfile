@@ -7,7 +7,7 @@ WORKDIR /app
 COPY build/libs/*.jar app.jar
 
 # Service Account Key einbinden
-COPY ../main/java/com/chalkItUp/chalkItUp/config/admin.json /app/config/admin.json
+COPY /etc/secrets/admin.json /app/config/admin.json
 
 # Port (optional, z. B. 8080)
 EXPOSE 8080
