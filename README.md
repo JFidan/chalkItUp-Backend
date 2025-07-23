@@ -1,2 +1,2 @@
-# chalkItUp-Backend
-Backend for chalkItUp
+# General information
+Backend for [ChalkItUp.](https://github.com/gabrielakbarov/ChalkItUp/blob/main/README.md)
