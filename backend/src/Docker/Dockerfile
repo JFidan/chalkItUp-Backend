@@ -10,8 +10,7 @@ COPY ../../.mvn .mvn
 COPY ../../mvnw .
 RUN ./mvnw dependency:go-offline
 
-# Jetzt den Quellcode kopieren und bauen
-COPY src ./src
+
 RUN ./mvnw clean package -DskipTests
 
 # --------- STAGE 2: Runtime mit kleinem JDK 21-Image ----------
