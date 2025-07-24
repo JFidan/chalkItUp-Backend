@@ -63,8 +63,7 @@ public class GameService {
 
         try {
             Map<String, Object> map = new HashMap<>();
-            map.put("winner", game.getWinner());
-            map.put("loser", game.getLoser());
+            map.put("players", game.getPlayers());
 
             ApiFuture<WriteResult> games = firestore.collection("Games").document(game.getId()).update(map);
             return "Document is updated: id is"+ game.getId();
