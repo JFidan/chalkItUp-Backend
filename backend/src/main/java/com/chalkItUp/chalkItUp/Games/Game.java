@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,9 +18,11 @@ public class Game {
 
     @DocumentId
     private String id;
-    private String winner;
-    private String loser;
+    private List<PlayerGame> players;
+    private Timestamp endTime;
 
     @ServerTimestamp
     private Timestamp createdAt;
+
 }
+
