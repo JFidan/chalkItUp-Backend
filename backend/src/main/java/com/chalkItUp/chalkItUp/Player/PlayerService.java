@@ -21,7 +21,7 @@ public class PlayerService {
     public String createPlayer(Player player) {
         try {
             ApiFuture<DocumentReference> players = firestore.collection("Players").add(player);
-            return "Document is saved: id is"+ player.getId();
+            return "Document is saved: id is"+ players.get().getId();
         }catch (Exception e){
             log.error(e.getMessage());
             throw new RuntimeException("Error creating player: "+e.getMessage());
@@ -62,8 +62,8 @@ public class PlayerService {
 
         try {
             Map<String, Object> map = new HashMap<>();
-            map.put("firstName", player.getFirstName());
-            map.put("lastName", player.getLastName());
+            map.put("username", player.getUsername());
+            map.put("email", player.getEmail());
 
             ApiFuture<WriteResult> players = firestore.collection("Players").document(player.getId()).update(map);
             return "Document is updated: id is"+ player.getId();
@@ -75,12 +75,11 @@ public class PlayerService {
 
     public String deletePlayer(String id) {
         try {
-            ApiFuture<WriteResult> players = firestore.collection("Players").document(id).delete();
+            firestore.collection("Players").document(id).delete();
             return "Document is deleted: id is"+ id;
         }catch (Exception e){
             log.error(e.getMessage());
             throw new RuntimeException("Error deleting player: "+e.getMessage());
         }
     }
-
 }
