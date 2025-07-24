@@ -16,6 +16,7 @@ public class Player {
 
     @DocumentId
     private String id;
+    private String userId;
     private String username;
     private String email;
 
