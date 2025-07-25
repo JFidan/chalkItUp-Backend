@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class PlayerGame {
-    public String userID;
+    public String userId;
     public int team;
     public boolean isWinner;
 }
