@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,7 @@ public class GameService {
 
             return documents.stream()
                     .map(doc -> doc.toObject(Game.class))
+                    .sorted(Comparator.comparing(Game::getCreatedAt).reversed())
                     .collect(Collectors.toList());
         }
         catch (Exception e){
@@ -55,7 +57,8 @@ public class GameService {
         }
     }
 
-    public String updateGame(Game game) {
+    public String updateGame(GameDTO gameDTO) {
+        Game game = GameMapper.toFirestore(gameDTO);
 
         if(getGame(game.getId()) == null) {
             return createGame(game);
@@ -64,6 +67,7 @@ public class GameService {
         try {
             Map<String, Object> map = new HashMap<>();
             map.put("players", game.getPlayers());
+            map.put("endTime", game.getEndTime());
 
             ApiFuture<WriteResult> games = firestore.collection("Games").document(game.getId()).update(map);
             return "Document is updated: id is"+ game.getId();

@@ -29,8 +29,8 @@ public class GameController {
     }
 
     @PutMapping
-    public ResponseEntity<String> updatePlayer(@RequestBody Game player) {
-        return ResponseEntity.ok(gameService.updateGame(player));
+    public ResponseEntity<String> updatePlayer(@RequestBody GameDTO dto) {
+        return ResponseEntity.ok(gameService.updateGame(dto));
     }
 
     @DeleteMapping("/{id}")

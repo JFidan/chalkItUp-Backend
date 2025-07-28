@@ -12,4 +12,4 @@ public class ChalkItUpApplication {
 
 }
 
-//GOOGLE_CLOUD_PROJECT=chalkitup-95340;GOOGLE_APPLICATION_CREDENTIALS=C:\Users\jfidan\Downloads\admin.json
+//GOOGLE_CLOUD_PROJECT=chalkitup-95340;GOOGLE_APPLICATION_CREDENTIALS=C:\Projects\chalkItUp-Backend\backend\src\main\java\com\chalkItUp\chalkItUp\config\admin.json
