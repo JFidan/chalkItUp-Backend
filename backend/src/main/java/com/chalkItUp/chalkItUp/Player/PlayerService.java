@@ -65,11 +65,14 @@ public class PlayerService {
         }
     }
 
-    public String updatePlayer(PlayerDTO playerDTO) {
+    public String updatePlayer(PlayerDTO playerDTO) throws Exception {
         Player player = PlayerMapper.toFirestore(playerDTO);
         if(getPlayer(player.getId()) == null) {
             return createPlayer(player);
         }
+
+        if(checkIfUsernameExists(player.getUsername()))
+            throw new Exception("Username already exists");
 
         try {
             Map<String, Object> map = new HashMap<>();
@@ -92,5 +95,11 @@ public class PlayerService {
             log.error(e.getMessage());
             throw new RuntimeException("Error deleting player: "+e.getMessage());
         }
+    }
+
+    public boolean checkIfUsernameExists(String username) {
+        List<Player> players = getAllPlayer();
+        players.stream().filter(player -> player.getUsername().equals(username)).findFirst().orElse(null);
+        return players.size() > 0;
     }
 }
