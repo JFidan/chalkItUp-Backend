@@ -19,7 +19,4 @@ public class Player {
     private String userId;
     private String username;
     private String email;
-
-    @ServerTimestamp
-    private Timestamp createdAt;
 }
