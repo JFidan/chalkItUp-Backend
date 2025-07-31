@@ -19,7 +19,7 @@ public class PlayerController {
     }
 
     @GetMapping("all")
-    public ResponseEntity<List<Player>> getPlayers() {
+    public ResponseEntity<List<PlayerDTO>> getPlayers() {
         return ResponseEntity.ok(playerService.getAllPlayer());
     }
 

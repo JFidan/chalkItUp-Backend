@@ -1,20 +1,17 @@
 package com.chalkItUp.chalkItUp.Games;
 
+import com.chalkItUp.chalkItUp.Player.Player;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GameDTO {
-    private String id;
-    private List<PlayerGameDTO> players;
-    private Instant endTime;
+public class PlayerGameDTO {
+    public Player player;
+    public int team;
+    public boolean winner;
 }
-

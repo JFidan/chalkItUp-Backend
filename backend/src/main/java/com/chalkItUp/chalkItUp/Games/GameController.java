@@ -14,27 +14,27 @@ public class GameController {
     private GameService gameService;
 
     @PostMapping
-    public ResponseEntity<String> addPlayer(@RequestBody Game player) {
+    public ResponseEntity<String> addGame(@RequestBody Game player) {
         return ResponseEntity.ok(gameService.createGame(player));
     }
 
     @GetMapping("all")
-    public ResponseEntity<List<Game>> getPlayers() {
+    public ResponseEntity<List<GameDTO>> getGames() {
         return ResponseEntity.ok(gameService.getAllGames());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Game> getPlayer(@PathVariable String id) {
+    public ResponseEntity<Game> getGame(@PathVariable String id) {
         return ResponseEntity.ok(gameService.getGame(id));
     }
 
     @PutMapping
-    public ResponseEntity<String> updatePlayer(@RequestBody GameDTO dto) {
+    public ResponseEntity<String> updateGame(@RequestBody GameDTO dto) {
         return ResponseEntity.ok(gameService.updateGame(dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePlayer(@PathVariable String id) {
+    public ResponseEntity<String> deleteGame(@PathVariable String id) {
         gameService.deleteGame(id);
         return ResponseEntity.noContent().build();
     }

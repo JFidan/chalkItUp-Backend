@@ -14,4 +14,7 @@ public class PlayerDTO {
     private String userId;
     private String username;
     private String email;
+    private int winsCount;
+    private int lossesCount;
+    private double winRate;
 }

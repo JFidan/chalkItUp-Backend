@@ -8,23 +8,38 @@ import java.time.Instant;
 
 public class PlayerMapper {
 
-    public static PlayerDTO toDTO(Player firestoreGame) {
+    public static PlayerDTO toDTO(Player player, int winsCount, int lossesCount) {
+        if (player == null) {
+            return null;
+        }
+
+        int totalGames = winsCount + lossesCount;
+        double winRate = totalGames > 0 ? (double) winsCount / totalGames : 0.0;
+
         return PlayerDTO.builder()
-                .id(firestoreGame.getId())
-                .email(firestoreGame.getEmail())
-                .userId(firestoreGame.getUserId())
-                .username(firestoreGame.getUsername())
+                .id(player.getId())
+                .userId(player.getUserId())
+                .username(player.getUsername())
+                .email(player.getEmail())
+                .winsCount(winsCount)
+                .lossesCount(lossesCount)
+                .winRate(winRate)
                 .build();
     }
 
-    public static Player toFirestore(PlayerDTO dto) {
+    public static Player toEntity(PlayerDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
         return Player.builder()
                 .id(dto.getId())
-                .email(dto.getEmail())
-                .username(dto.getUsername())
                 .userId(dto.getUserId())
+                .username(dto.getUsername())
+                .email(dto.getEmail())
                 .build();
     }
+
 
     private static Instant toInstant(Timestamp firestoreTs) {
         return firestoreTs == null ? null : firestoreTs.toSqlTimestamp().toInstant();

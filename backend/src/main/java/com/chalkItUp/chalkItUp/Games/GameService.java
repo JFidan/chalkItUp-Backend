@@ -1,15 +1,13 @@
 package com.chalkItUp.chalkItUp.Games;
 
+import com.chalkItUp.chalkItUp.Player.Player;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,15 +39,33 @@ public class GameService {
         }
     }
 
-    public List<Game> getAllGames() {
+    public List<GameDTO> getAllGames() {
         try {
             ApiFuture<QuerySnapshot> future = firestore.collection("Games").get();
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
 
-            return documents.stream()
-                    .map(doc -> doc.toObject(Game.class))
-                    .sorted(Comparator.comparing(Game::getCreatedAt).reversed())
-                    .collect(Collectors.toList());
+            List<Game> games = documents.stream()
+                                .map(doc -> doc.toObject(Game.class))
+                                .sorted(Comparator.comparing(Game::getCreatedAt).reversed())
+                                .toList();
+
+            Set<String> userIds = games.stream()
+                                .flatMap(game -> game.getPlayers().stream())
+                                .map(PlayerGame::getUserId)
+                                .collect(Collectors.toSet());
+
+            Map<String, Player> playerMap = new HashMap<>();
+            for (String userId : userIds) {
+                DocumentSnapshot playerDoc = firestore.collection("Players").document(userId).get().get();
+                if (playerDoc.exists()) {
+                    Player player = playerDoc.toObject(Player.class);
+                    playerMap.put(userId, player);
+                }
+            }
+
+            return games.stream()
+                                .map(game -> GameMapper.toDTO(game, playerMap))
+                                .toList();
         }
         catch (Exception e){
             log.error(e.getMessage());
@@ -58,7 +74,7 @@ public class GameService {
     }
 
     public String updateGame(GameDTO gameDTO) {
-        Game game = GameMapper.toFirestore(gameDTO);
+        Game game = GameMapper.toEntity(gameDTO);
 
         if(getGame(game.getId()) == null) {
             return createGame(game);
