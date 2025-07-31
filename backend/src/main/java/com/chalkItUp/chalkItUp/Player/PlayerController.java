@@ -29,7 +29,7 @@ public class PlayerController {
     }
 
     @PutMapping
-    public ResponseEntity<String> updatePlayer(@RequestBody Player player) {
+    public ResponseEntity<String> updatePlayer(@RequestBody PlayerDTO player) {
         return ResponseEntity.ok(playerService.updatePlayer(player));
     }
 

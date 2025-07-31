@@ -65,8 +65,8 @@ public class PlayerService {
         }
     }
 
-    public String updatePlayer(Player player) {
-
+    public String updatePlayer(PlayerDTO playerDTO) {
+        Player player = PlayerMapper.toFirestore(playerDTO);
         if(getPlayer(player.getId()) == null) {
             return createPlayer(player);
         }
