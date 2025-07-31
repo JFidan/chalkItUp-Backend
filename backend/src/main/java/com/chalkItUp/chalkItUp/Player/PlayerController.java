@@ -25,7 +25,7 @@ public class PlayerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Player> getPlayer(@PathVariable String id) {
-        return ResponseEntity.ok(playerService.getPlayer(id));
+        return ResponseEntity.ok(playerService.getPlayerWithUserId(id));
     }
 
     @PutMapping

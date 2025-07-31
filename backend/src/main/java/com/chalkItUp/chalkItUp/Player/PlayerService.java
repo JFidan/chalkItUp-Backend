@@ -54,6 +54,17 @@ public class PlayerService {
         }
     }
 
+    public Player getPlayerWithUserId(String userId) {
+        try {
+            List<Player> players = getAllPlayer();
+            return players.stream().filter(player -> player.getUserId().equals(userId)).findFirst().orElse(null);
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            throw new RuntimeException("Error finding player: "+e.getMessage());
+        }
+    }
+
     public String updatePlayer(Player player) {
 
         if(getPlayer(player.getId()) == null) {
