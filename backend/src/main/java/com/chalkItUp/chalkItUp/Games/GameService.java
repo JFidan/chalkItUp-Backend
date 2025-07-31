@@ -56,7 +56,7 @@ public class GameService {
 
             Map<String, Player> playerMap = new HashMap<>();
             for (String userId : userIds) {
-                DocumentSnapshot playerDoc = firestore.collection("Players").document(userId).get().get();
+                DocumentSnapshot playerDoc = firestore.collection("Players").whereEqualTo("userId", userId).get().get().getDocuments().get(0);
                 if (playerDoc.exists()) {
                     Player player = playerDoc.toObject(Player.class);
                     playerMap.put(userId, player);
