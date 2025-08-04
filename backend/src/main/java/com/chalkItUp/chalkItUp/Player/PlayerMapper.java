@@ -5,16 +5,17 @@ import com.chalkItUp.chalkItUp.Games.GameDTO;
 import com.google.cloud.Timestamp;
 
 import java.time.Instant;
+import java.util.List;
 
 public class PlayerMapper {
 
-    public static PlayerDTO toDTO(Player player, int winsCount, int lossesCount) {
+    public static PlayerDTO toDTO(Player player, int winsCount, int lossesCount, List<Boolean> lastWins) {
         if (player == null) {
             return null;
         }
 
         int totalGames = winsCount + lossesCount;
-        double winRate = totalGames > 0 ? (double) winsCount / totalGames : 0.0;
+        double winRate =  totalGames > 0 ? Math.round(((double) winsCount / totalGames) * 100.0) / 100.0  : 0.0;
 
         return PlayerDTO.builder()
                 .id(player.getId())
@@ -24,6 +25,19 @@ public class PlayerMapper {
                 .winsCount(winsCount)
                 .lossesCount(lossesCount)
                 .winRate(winRate)
+                .lastWins(lastWins)
+                .build();
+    }
+
+    public static PlayerDTO toDTO(Player player) {
+        if (player == null) {
+            return null;
+        }
+        return PlayerDTO.builder()
+                .id(player.getId())
+                .userId(player.getUserId())
+                .username(player.getUsername())
+                .email(player.getEmail())
                 .build();
     }
 

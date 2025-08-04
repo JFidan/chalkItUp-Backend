@@ -1,6 +1,7 @@
 package com.chalkItUp.chalkItUp.Games;
 
 import com.chalkItUp.chalkItUp.Player.Player;
+import com.chalkItUp.chalkItUp.Player.PlayerMapper;
 import com.google.cloud.Timestamp;
 
 import java.time.Instant;
@@ -59,7 +60,7 @@ public class GameMapper {
         }
 
         return PlayerGameDTO.builder()
-                .player(player)
+                .player(PlayerMapper.toDTO(player))
                 .team(playerGame.getTeam())
                 .winner(playerGame.isWinner())
                 .build();
@@ -71,7 +72,7 @@ public class GameMapper {
         }
 
         return PlayerGame.builder()
-                .userId(dto.getPlayer().getId()) // assuming Player has an `id` field
+                .userId(dto.getPlayer().getUserId()) // assuming Player has an `id` field
                 .team(dto.getTeam())
                 .winner(dto.isWinner())
                 .build();

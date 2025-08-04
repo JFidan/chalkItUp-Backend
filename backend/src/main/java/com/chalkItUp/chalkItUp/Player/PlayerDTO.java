@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,4 +19,5 @@ public class PlayerDTO {
     private int winsCount;
     private int lossesCount;
     private double winRate;
+    private List<Boolean> lastWins;
 }

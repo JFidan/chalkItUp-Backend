@@ -38,4 +38,10 @@ public class PlayerController {
         playerService.deletePlayer(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("check-username/{username}")
+    public ResponseEntity<String> checkUsername(@PathVariable String username) {
+        return ResponseEntity.ok(playerService.checkUsername(username));
+    }
+
 }

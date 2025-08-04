@@ -8,9 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -58,10 +56,12 @@ public class PlayerService {
 
             List<Game> games = gameDocs.stream()
                     .map(doc -> doc.toObject(Game.class))
+                    .sorted(Comparator.comparing(Game::getEndTime).reversed())
                     .collect(Collectors.toList());
 
             Map<String, Integer> wins = new HashMap<>();
             Map<String, Integer> losses = new HashMap<>();
+            Map<String, List<Boolean>> lastWins = new HashMap<>();
 
             for (Game game : games) {
                 for (PlayerGame pg : game.getPlayers()) {
@@ -71,6 +71,7 @@ public class PlayerService {
                     } else {
                         losses.put(userId, losses.getOrDefault(userId, 0) + 1);
                     }
+                    lastWins.computeIfAbsent(userId, k -> new ArrayList<>()).add(pg.isWinner());
                 }
             }
 
@@ -78,8 +79,10 @@ public class PlayerService {
                     .map(p -> {
                         int winCount = wins.getOrDefault(p.getUserId(), 0);
                         int lossCount = losses.getOrDefault(p.getUserId(), 0);
-                        return PlayerMapper.toDTO(p, winCount, lossCount);
+                        List<Boolean> lastWinsFromUser = lastWins.getOrDefault(p.getUserId(), new ArrayList<Boolean>());
+                        return PlayerMapper.toDTO(p, winCount, lossCount, lastWinsFromUser);
                     })
+                    .sorted(Comparator.comparing(PlayerDTO::getWinRate).reversed())
                     .collect(Collectors.toList());
 
         } catch (Exception e) {
@@ -130,6 +133,16 @@ public class PlayerService {
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new RuntimeException("Error deleting player: " + e.getMessage());
+        }
+    }
+
+    public String checkUsername(String username) {
+        try{
+            QueryDocumentSnapshot player = firestore.collection("Players").whereEqualTo("username", username).get().get().getDocuments().getFirst();
+            return player.toObject(Player.class).getUsername();
+        }
+        catch (Exception e){
+            return "";
         }
     }
 }
