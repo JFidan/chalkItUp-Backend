@@ -56,6 +56,7 @@ public class PlayerService {
 
             List<Game> games = gameDocs.stream()
                     .map(doc -> doc.toObject(Game.class))
+                    .filter(game -> game.getEndTime() != null)
                     .sorted(Comparator.comparing(Game::getEndTime).reversed())
                     .collect(Collectors.toList());
 
