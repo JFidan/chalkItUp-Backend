@@ -20,4 +20,6 @@ public class PlayerDTO {
     private int lossesCount;
     private double winRate;
     private List<Boolean> lastWins;
+    private int wonBy8Ball;
+    private int lostBy8Ball;
 }

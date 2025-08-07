@@ -63,6 +63,7 @@ public class GameMapper {
                 .player(PlayerMapper.toDTO(player))
                 .team(playerGame.getTeam())
                 .winner(playerGame.isWinner())
+                .endState(playerGame.getEndState())
                 .build();
     }
 
@@ -75,6 +76,7 @@ public class GameMapper {
                 .userId(dto.getPlayer().getUserId()) // assuming Player has an `id` field
                 .team(dto.getTeam())
                 .winner(dto.isWinner())
+                .endState(dto.getEndState())
                 .build();
     }
 

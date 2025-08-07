@@ -63,6 +63,8 @@ public class PlayerService {
             Map<String, Integer> wins = new HashMap<>();
             Map<String, Integer> losses = new HashMap<>();
             Map<String, List<Boolean>> lastWins = new HashMap<>();
+            Map<String, Integer> wonBy8Ball = new HashMap<>();
+            Map<String, Integer> lostBy8Ball = new HashMap<>();
 
             for (Game game : games) {
                 for (PlayerGame pg : game.getPlayers()) {
@@ -73,6 +75,14 @@ public class PlayerService {
                         losses.put(userId, losses.getOrDefault(userId, 0) + 1);
                     }
                     lastWins.computeIfAbsent(userId, k -> new ArrayList<>()).add(pg.isWinner());
+
+                    if ("loss_by_8_ball".equals(pg.endState)) {
+                        if(pg.isWinner()){
+                            wonBy8Ball.put(userId, wonBy8Ball.getOrDefault(userId, 0) + 1);
+                        } else {
+                            lostBy8Ball.put(userId, lostBy8Ball.getOrDefault(userId, 0) + 1);
+                        }
+                    }
                 }
             }
 
@@ -81,7 +91,9 @@ public class PlayerService {
                         int winCount = wins.getOrDefault(p.getUserId(), 0);
                         int lossCount = losses.getOrDefault(p.getUserId(), 0);
                         List<Boolean> lastWinsFromUser = lastWins.getOrDefault(p.getUserId(), new ArrayList<Boolean>());
-                        return PlayerMapper.toDTO(p, winCount, lossCount, lastWinsFromUser);
+                        int wonBy8BallCount = wonBy8Ball.getOrDefault(p.getUserId(), 0);
+                        int lostBy8BallCount = lostBy8Ball.getOrDefault(p.getUserId(), 0);
+                        return PlayerMapper.toDTO(p, winCount, lossCount, lastWinsFromUser, wonBy8BallCount, lostBy8BallCount);
                     })
                     .sorted(Comparator.comparing(PlayerDTO::getWinRate).reversed())
                     .collect(Collectors.toList());

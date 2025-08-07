@@ -9,7 +9,7 @@ import java.util.List;
 
 public class PlayerMapper {
 
-    public static PlayerDTO toDTO(Player player, int winsCount, int lossesCount, List<Boolean> lastWins) {
+    public static PlayerDTO toDTO(Player player, int winsCount, int lossesCount, List<Boolean> lastWins, int wonBy8Ball, int lostBy8Ball) {
         if (player == null) {
             return null;
         }
@@ -26,6 +26,8 @@ public class PlayerMapper {
                 .lossesCount(lossesCount)
                 .winRate(winRate)
                 .lastWins(lastWins)
+                .wonBy8Ball(wonBy8Ball)
+                .lostBy8Ball(lostBy8Ball)
                 .build();
     }
 

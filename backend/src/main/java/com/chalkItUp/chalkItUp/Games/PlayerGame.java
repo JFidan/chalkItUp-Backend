@@ -14,4 +14,5 @@ public class PlayerGame {
     public String userId;
     public int team;
     public boolean winner;
+    public String endState;
 }

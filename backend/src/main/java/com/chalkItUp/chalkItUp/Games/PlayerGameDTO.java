@@ -14,4 +14,5 @@ public class PlayerGameDTO {
     public PlayerDTO player;
     public int team;
     public boolean winner;
+    public String endState;
 }
